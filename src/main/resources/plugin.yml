@@ -1,0 +1,6 @@
+name: BankSystem
+version: '${project.version}'
+main: de.chaos.mc.banksystem.BankSystem
+api-version: 1.19
+prefix: BankSystem
+authors: [ Chaoshero5567 ]
