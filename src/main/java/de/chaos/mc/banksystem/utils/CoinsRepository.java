@@ -78,7 +78,7 @@ public class CoinsRepository implements ICoinsInterface {
     }
 
     @Override
-    public long changePing(UUID uuid, String pin) {
+    public long changePing(UUID uuid, int pin) {
         try {
             CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
             coinsDAO.setPin(pin);
@@ -93,9 +93,8 @@ public class CoinsRepository implements ICoinsInterface {
 
     @Override
     public long createAccount(UUID uuid) {
-        String pin = String.format("%04d", new Random(10000));
+        int pin = RandomString.digits.charAt(4);
         String Kontonummer = new RandomString(8).toString();
-
 
         CoinsDAO coinsDAO = CoinsDAO.builder()
                 .uuid(uuid)
@@ -103,7 +102,6 @@ public class CoinsRepository implements ICoinsInterface {
                 .pin(pin)
                 .kontoNummer(Kontonummer)
                 .build();
-
         return 0;
     }
 

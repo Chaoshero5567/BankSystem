@@ -31,5 +31,5 @@ public class CoinsDAO {
     public String kontoNummer;
 
     @DatabaseField(columnName = PIN_FIELD)
-    public String pin;
+    public int pin;
 }

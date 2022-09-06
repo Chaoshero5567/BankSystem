@@ -21,6 +21,7 @@ public class TransaktionLogsDAO {
     public static final String TARGET_UUID_FIELD = "TARGET_UUID";
     public static final String AMOUNT_FIELD = "AMOUNT";
     public static final String DATE_FIELD = "DATE";
+    public static final String ANGEZEIGT_FIELD = "ANGEZEIGT";
 
     @DatabaseField(id = true, columnName = TRANSAKTIONEN_ID, generatedId = true)
     public long id;
@@ -36,4 +37,7 @@ public class TransaktionLogsDAO {
 
     @DatabaseField(columnName = DATE_FIELD)
     public String date;
+
+    @DatabaseField(columnName = ANGEZEIGT_FIELD)
+    public boolean angezeigt;
 }

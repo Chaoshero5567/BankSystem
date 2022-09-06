@@ -15,7 +15,7 @@ public class SQLConfig {
         defaults.put("database", "coins");
         defaults.put("user", "coins");
         defaults.put("password", "coins");
-        fileBuilder = new FileBuilder(plugin.getDataFolder().getPath(), "SQLConfig", defaults);
+        this.fileBuilder = new FileBuilder(plugin.getDataFolder().getPath(), "SQLConfig", defaults);
     }
     @Getter
     public final String host = fileBuilder.getString("host");
