@@ -7,6 +7,11 @@ public interface ICoinsInterface {
     public long setCoins(UUID uuid, long coins);
     public long addCoins(UUID uuid, long coins);
     public long removeCoins(UUID uuid, long coins);
+
+    public long addCoinsBank(UUID uuid, long coins);
+    public long removeCoinsBank(UUID uuid, long coins);
+    public long getCoinsBank(UUID uuid, long coins);
+
     public boolean hasEnoughCoins(UUID uuid, long amount);
 
     public long changePing(UUID uuid, int pin);

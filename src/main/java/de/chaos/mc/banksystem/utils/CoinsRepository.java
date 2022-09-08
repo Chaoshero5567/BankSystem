@@ -69,6 +69,44 @@ public class CoinsRepository implements ICoinsInterface {
     }
 
     @Override
+    public long addCoinsBank(UUID uuid, long coins) {
+        long l = getCoinsBank(uuid, coins) + coins;
+        try {
+            CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
+            coinsDAO.setCoins(l);
+            daoManager.getDAO().update(coinsDAO);
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+        return getCoins(uuid);
+    }
+
+    @Override
+    public long removeCoinsBank(UUID uuid, long coins) {
+        long l = getCoinsBank(uuid, coins) - coins;
+        try {
+            CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
+            coinsDAO.setCoins(l);
+            daoManager.getDAO().update(coinsDAO);
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+        return getCoins(uuid);
+    }
+
+    @Override
+    public long getCoinsBank(UUID uuid, long coins) {
+        CoinsDAO coinsDAO = null;
+        try {
+            coinsDAO = daoManager.getDAO().queryForId(uuid);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        assert coinsDAO != null;
+        return coinsDAO.getBankCoins();
+    }
+
+    @Override
     public boolean hasEnoughCoins(UUID uuid, long amount) {
         if (getCoins(uuid) >= amount) {
             return true;
@@ -98,7 +136,8 @@ public class CoinsRepository implements ICoinsInterface {
 
         CoinsDAO coinsDAO = CoinsDAO.builder()
                 .uuid(uuid)
-                .coins(1000)
+                .coins(0)
+                .bankCoins(1000)
                 .pin(pin)
                 .kontoNummer(Kontonummer)
                 .build();

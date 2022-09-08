@@ -18,6 +18,7 @@ import java.util.UUID;
 public class CoinsDAO {
     public static final String PLAYER_UUID_FIELD = "UUID";
     public static final String COINS_FIELD = "COINS";
+    public static final String BANK_COINS_FIELD = "BANK_COINS";
     public static final String KONTO_NUMMER = "KONTO_NUMMER";
     public static final String PIN_FIELD = "PIN";
 
@@ -32,4 +33,7 @@ public class CoinsDAO {
 
     @DatabaseField(columnName = PIN_FIELD)
     public int pin;
+
+    @DatabaseField(columnName = BANK_COINS_FIELD)
+    public int bankCoins;
 }
