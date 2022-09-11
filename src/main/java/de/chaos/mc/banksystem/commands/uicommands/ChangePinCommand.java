@@ -1,4 +1,4 @@
-package de.chaos.mc.banksystem.commands;
+package de.chaos.mc.banksystem.commands.uicommands;
 
 import de.chaos.mc.banksystem.utils.ICoinsInterface;
 import org.bukkit.command.Command;

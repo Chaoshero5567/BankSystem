@@ -31,14 +31,15 @@ public class TransaktionRepository implements ITransaktionInterface{
                 .target_uuid(target)
                 .amount(amount)
                 .date(date)
+                .angezeigt(false)
                 .build();
         try {
             daoManager.getDAO().update(transaktionLogsDAO);
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
-        iCoinsInterface.addCoins(target, amount);
-        iCoinsInterface.removeCoins(uuid, amount);
+        iCoinsInterface.addCoinsBank(target, amount);
+        iCoinsInterface.removeCoinsBank(uuid, amount);
 
         Bukkit.getPlayer(uuid).sendMessage(Component.text("-" + amount + " zu " + Bukkit.getPlayer(target).getDisplayName()));
         Bukkit.getPlayer(target).sendMessage(Component.text("+" + amount + "von" + Bukkit.getPlayer(uuid).getDisplayName()));
@@ -56,8 +57,12 @@ public class TransaktionRepository implements ITransaktionInterface{
 
             for (TransaktionLogsDAO dao : daos) {
                 if (amount >= 5) {
-                    daos.add(dao);
-                    amount++;
+                    if (!dao.angezeigt) {
+                        daos.add(dao);
+                        dao.setAngezeigt(true);
+                        daoManager.getDAO().update(dao);
+                        amount++;
+                    }
                 } else {
                     break;
                 }

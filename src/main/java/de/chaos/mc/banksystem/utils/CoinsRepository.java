@@ -2,9 +2,7 @@ package de.chaos.mc.banksystem.utils;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 
-import java.security.PublicKey;
 import java.sql.SQLException;
-import java.util.Random;
 import java.util.UUID;
 
 public class CoinsRepository implements ICoinsInterface {
@@ -30,7 +28,7 @@ public class CoinsRepository implements ICoinsInterface {
     }
 
     @Override
-    public long setCoins(UUID uuid, long coins) {
+    public long setCoinsBank(UUID uuid, long coins) {
         try {
             CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
             coinsDAO.setCoins(coins);
@@ -38,7 +36,18 @@ public class CoinsRepository implements ICoinsInterface {
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
+        return getCoinsBank(uuid);
+    }
 
+    @Override
+    public long setWalletCoins(UUID uuid, long coins) {
+        try {
+            CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
+            coinsDAO.setCoins(coins);
+            daoManager.getDAO().update(coinsDAO);
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
         return getCoins(uuid);
     }
 
@@ -70,7 +79,7 @@ public class CoinsRepository implements ICoinsInterface {
 
     @Override
     public long addCoinsBank(UUID uuid, long coins) {
-        long l = getCoinsBank(uuid, coins) + coins;
+        long l = getCoinsBank(uuid) + coins;
         try {
             CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
             coinsDAO.setCoins(l);
@@ -83,7 +92,7 @@ public class CoinsRepository implements ICoinsInterface {
 
     @Override
     public long removeCoinsBank(UUID uuid, long coins) {
-        long l = getCoinsBank(uuid, coins) - coins;
+        long l = getCoinsBank(uuid) - coins;
         try {
             CoinsDAO coinsDAO = daoManager.getDAO().queryForId(uuid);
             coinsDAO.setCoins(l);
@@ -95,7 +104,7 @@ public class CoinsRepository implements ICoinsInterface {
     }
 
     @Override
-    public long getCoinsBank(UUID uuid, long coins) {
+    public long getCoinsBank(UUID uuid) {
         CoinsDAO coinsDAO = null;
         try {
             coinsDAO = daoManager.getDAO().queryForId(uuid);
