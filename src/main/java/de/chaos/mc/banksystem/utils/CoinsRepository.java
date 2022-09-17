@@ -8,11 +8,11 @@ import java.util.UUID;
 public class CoinsRepository implements ICoinsInterface {
     public JdbcPooledConnectionSource connectionSource;
     public DAOManager<CoinsDAO, UUID> daoManager;
+
     public CoinsRepository(JdbcPooledConnectionSource jdbcPooledConnectionSource) {
         this.connectionSource = jdbcPooledConnectionSource;
         this.daoManager = new DAOManager<CoinsDAO, UUID>(CoinsDAO.class, connectionSource);
     }
-
 
 
     @Override

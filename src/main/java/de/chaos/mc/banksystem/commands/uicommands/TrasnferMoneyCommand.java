@@ -11,9 +11,11 @@ import java.util.UUID;
 
 public class TrasnferMoneyCommand implements CommandExecutor {
     ITransaktionInterface transaktionInterface;
+
     public TrasnferMoneyCommand(ITransaktionInterface transaktionInterface) {
         this.transaktionInterface = transaktionInterface;
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 3) {

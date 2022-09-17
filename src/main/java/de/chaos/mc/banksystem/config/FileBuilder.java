@@ -17,13 +17,11 @@ public class FileBuilder {
     private final Map<String, Object> cache;
     private final ExecutorService pool;
 
-    public FileBuilder(String path, String name, HashMap<String, Object> defaults)
-    {
+    public FileBuilder(String path, String name, HashMap<String, Object> defaults) {
         this.file = new File(path, name.toLowerCase() + ".yml");
 
         if (!file.exists()) {
-            try
-            {
+            try {
                 file.createNewFile();
                 this.saveDefaults(defaults);
             } catch (IOException e) {
@@ -39,8 +37,7 @@ public class FileBuilder {
     }
 
     private void load() {
-        for (String key : configuration.getKeys(true))
-        {
+        for (String key : configuration.getKeys(true)) {
             cache.put(key, configuration.get(key));
         }
     }
@@ -59,18 +56,15 @@ public class FileBuilder {
         return configuration.get(key);
     }
 
-    public String getString(String key)
-    {
+    public String getString(String key) {
         return (String) get(key);
     }
 
-    public int getInteger(String key)
-    {
+    public int getInteger(String key) {
         return (int) get(key);
     }
 
-    public List<String> getList(String key)
-    {
+    public List<String> getList(String key) {
         return (List<String>) get(key);
     }
 
@@ -88,6 +82,7 @@ public class FileBuilder {
             exception.printStackTrace();
         }
     }
+
     public void saveDefaults(HashMap<String, Object> map) {
         for (String string : map.keySet()) {
             configuration.set(string, map.get(string));

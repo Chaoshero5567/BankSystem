@@ -11,9 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class WalletCommand implements CommandExecutor {
     ICoinsInterface iCoinsInterface;
+
     public WalletCommand(ICoinsInterface iCoinsInterface) {
         this.iCoinsInterface = iCoinsInterface;
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
@@ -22,7 +24,7 @@ public class WalletCommand implements CommandExecutor {
                 if (args.length == 0) {
                     player.sendMessage(Component.text(iCoinsInterface.getCoins(player.getUniqueId())));
                 } else {
-                    if (Bukkit.getPlayer(args[0])!= null) {
+                    if (Bukkit.getPlayer(args[0]) != null) {
                         player.sendMessage(Component.text(iCoinsInterface.getCoins(Bukkit.getPlayer(args[0]).getUniqueId())));
                     } else {
                         player.sendMessage("Player not online");

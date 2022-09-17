@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class KontoauszugCommand implements CommandExecutor {
     ITransaktionInterface transaktionInterface;
+
     public KontoauszugCommand(ITransaktionInterface iTransaktionInterface) {
         this.transaktionInterface = iTransaktionInterface;
     }
@@ -21,17 +22,16 @@ public class KontoauszugCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-          for (TransaktionLogsDAO dao : transaktionInterface.getLastTransaktions(player.getUniqueId())) {
-              String LORE = "Kontoauszug: /n" +
-                            "Datum: " + dao.getDate() + "/n" +
-                            "Amount: " + dao.getAmount() + "/n" +
-                            "TransaktionsID: " + dao.getId()+ "/n" +
-                            "Empfänger: " + dao.getTarget_uuid();
+            for (TransaktionLogsDAO dao : transaktionInterface.getLastTransaktions(player.getUniqueId())) {
+                String LORE = "Kontoauszug: /n" +
+                        "Datum: " + dao.getDate() + "/n" +
+                        "Amount: " + dao.getAmount() + "/n" +
+                        "TransaktionsID: " + dao.getId() + "/n" +
+                        "Empfänger: " + dao.getTarget_uuid();
 
-
-              ItemStack auszug = new ItemBuilder(Material.BOOK).name("Kontauszug vom " + dao.getDate()).setlore(LORE).itemStack();
-            player.getInventory().addItem(auszug);
-          }
+                ItemStack auszug = new ItemBuilder(Material.BOOK).name("Kontauszug vom " + dao.getDate()).setlore(LORE).itemStack();
+                player.getInventory().addItem(auszug);
+            }
         }
         return false;
     }

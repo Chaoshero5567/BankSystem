@@ -1,6 +1,8 @@
 package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 
+import de.chaos.mc.banksystem.BankSystem;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,50 +10,52 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 
 class MenuListener implements Listener {
 
-	private HashMap<Player, Menu> openedMenus = new HashMap<>();
+    private HashMap<Player, Menu> openedMenus = new HashMap<>();
 
-	@EventHandler
-	public void onClick(InventoryClickEvent e) {
-		HumanEntity who = e.getWhoClicked();
+    public static MenuListener register(Plugin plugin) {
+        MenuListener listener = new MenuListener();
+        Bukkit.getPluginManager().registerEvents(listener, plugin);
+        return listener;
+    }
 
-		if (who instanceof Player) {
-			Player p = (Player) who;
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        HumanEntity who = e.getWhoClicked();
 
-			if (openedMenus.containsKey(p)) {
-				Menu m = openedMenus.get(p);
-				m.click(p, e.getSlot());
-				e.setCancelled(true);
-			}
-		}
-	}
+        if (who instanceof Player) {
+            Player p = (Player) who;
 
-	@EventHandler
-	public void onDrop(final PlayerDropItemEvent e) {
-		Player p = e.getPlayer();
-		if (openedMenus.containsKey(p)) e.setCancelled(true);
-	}
+            if (openedMenus.containsKey(p)) {
+                Menu m = openedMenus.get(p);
+                m.click(p, e.getSlot());
+                e.setCancelled(true);
+            }
+        }
+    }
 
-	@EventHandler
-	public void onInventoryClose(InventoryCloseEvent e) {
-		if (e.getPlayer() instanceof Player) {
-			Player p = (Player) e.getPlayer();
-			if (openedMenus.containsKey(p)) openedMenus.remove(p);
-		}
-	}
+    @EventHandler
+    public void onDrop(final PlayerDropItemEvent e) {
+        Player p = e.getPlayer();
+        if (openedMenus.containsKey(p)) e.setCancelled(true);
+    }
 
-	public static MenuListener register(Plugin plugin) {
-		MenuListener listener = new MenuListener();
-		Bukkit.getPluginManager().registerEvents(listener, plugin);
-		return listener;
-	}
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent e) {
+        if (e.getPlayer() instanceof Player) {
+            Player p = (Player) e.getPlayer();
+            if (openedMenus.containsKey(p)) openedMenus.remove(p);
+        }
+    }
 
-	public void openMenu(Player p, Menu menu) {
-		openedMenus.put(p, menu);
-	}
+    public void openMenu(Player p, Menu menu) {
+        openedMenus.put(p, menu);
+    }
+
 }

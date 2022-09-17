@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TransaktionRepository implements ITransaktionInterface{
+public class TransaktionRepository implements ITransaktionInterface {
     public JdbcPooledConnectionSource connectionSource;
     public ICoinsInterface iCoinsInterface;
     public DAOManager<TransaktionLogsDAO, Long> daoManager;
+
     public TransaktionRepository(JdbcPooledConnectionSource jdbcPooledConnectionSource) {
         this.connectionSource = jdbcPooledConnectionSource;
         this.daoManager = new DAOManager<TransaktionLogsDAO, Long>(TransaktionLogsDAO.class, connectionSource);
@@ -24,7 +25,7 @@ public class TransaktionRepository implements ITransaktionInterface{
     @Override
     public TransaktionLogsDAO newTransaktion(UUID uuid, UUID target, long amount) {
         LocalDate localDate = LocalDate.now();
-        String date = localDate.getDayOfMonth() + "-" + localDate.getMonth() + "-" +  localDate.getYear();
+        String date = localDate.getDayOfMonth() + "-" + localDate.getMonth() + "-" + localDate.getYear();
 
         TransaktionLogsDAO transaktionLogsDAO = TransaktionLogsDAO.builder()
                 .uuid(uuid)

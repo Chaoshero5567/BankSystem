@@ -21,7 +21,7 @@ public class setCoinsWalletCommand implements CommandExecutor {
             Player player = (Player) sender;
             if (player.hasPermission("Coins.setCoins")) {
                 if (args.length == 2) {
-                    if (Bukkit.getPlayer(args[0])!= null) {
+                    if (Bukkit.getPlayer(args[0]) != null) {
                         Player target = Bukkit.getPlayer(args[0]);
                         Long amount = Long.valueOf(args[1]);
                         if (amount != null) {

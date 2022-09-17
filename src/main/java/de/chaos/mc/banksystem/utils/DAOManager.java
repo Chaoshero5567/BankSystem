@@ -8,14 +8,11 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public  class DAOManager<DaoType, KeyType> {
-    boolean tablesCreated = false;
-
-    Dao<DaoType, KeyType> dao = null;
-
+public class DAOManager<DaoType, KeyType> {
     protected BaseConnectionSource connectionSource;
     protected Logger log = Logger.getLogger(DAOManager.class.getName());
-
+    boolean tablesCreated = false;
+    Dao<DaoType, KeyType> dao = null;
     private Class<DaoType> daoType;
 
     public DAOManager(Class<DaoType> daoType, BaseConnectionSource connectionSource) {
