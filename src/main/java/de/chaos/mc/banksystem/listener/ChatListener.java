@@ -44,12 +44,12 @@ public class ChatListener implements Listener {
                 }
             }
             // Asking if player wants to get money from his account
-            if (bankPlayer.isPinchangeChat()) {
+            if (bankPlayer.isAbhebenChat()) {
                 // Canceling event so no message appears in chat
                 event.setCancelled(true);
                 // Validating amount format
                 String text = event.message().toString();
-                if (text.matches("[0-9]+") && text.length() > 2) {
+                if (text.matches("[0-9]+")) {
                     int amount = Integer.parseInt(text);
                     if (coinsInterface.hasEnoughCoins(player.getUniqueId(), amount)) {
                         // Changing Pin and setting status to neutral
@@ -70,10 +70,32 @@ public class ChatListener implements Listener {
                 if (coinsInterface.isValidKonto(Kontonummer)) {
                     bankPlayer.setKontonummerChat(false);
                     bankPlayer.setTransaktionAmount(true);
+                    bankPlayer.setTargetKontonummer(Kontonummer);
                     player.sendMessage(Component.text("Wie viel willst du überweisen?"));
                     bankSystem.getBankPlayers().put(player.getUniqueId(), bankPlayer);
                 } else {
                     player.sendMessage("Bitte gib eine valide Kontonummer ein");
+                }
+            }
+            if (bankPlayer.isTransaktionAmount()) {
+                // Canceling event so no message appears in chat
+                event.setCancelled(true);
+                String Kontonummer = String.valueOf(event.message());
+
+                String text = event.message().toString();
+                if (text.matches("[0-9]+")) {
+                  int amount = Integer.parseInt(text);
+                  if (coinsInterface.hasEnoughCoins(player.getUniqueId(), amount)) {
+
+                      iTransaktionInterface.newTransaktion(player.getUniqueId(), coinsInterface.getUUID(bankPlayer.getTargetKontonummer()), amount);
+
+                      bankPlayer.setTransaktionAmount(false);
+                      bankSystem.getBankPlayers().put(player.getUniqueId(), bankPlayer);
+                  } else {
+                      player.sendMessage("Du hast nicht genug Geld");
+                  }
+                } else {
+                    player.sendMessage("Bitte gib eine valide Zahl ein");
                 }
             }
         }

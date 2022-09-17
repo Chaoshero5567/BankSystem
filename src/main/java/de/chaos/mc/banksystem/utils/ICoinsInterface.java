@@ -30,4 +30,6 @@ public interface ICoinsInterface {
     public int getPin(UUID uuid);
 
     public boolean isValidKonto(String kontonummer);
+
+    public UUID getUUID(String Kontonummer);
 }

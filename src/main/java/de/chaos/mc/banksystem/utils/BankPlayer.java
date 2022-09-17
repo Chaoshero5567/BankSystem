@@ -13,6 +13,7 @@ public class BankPlayer {
     public boolean transaktionAmount;
     public boolean pinchangeChat;
     protected UUID uuid;
+    public String targetKontonummer;
 
     public BankPlayer(UUID uuid, boolean b1, boolean b2, boolean b3, boolean b4) {
         this.uuid = uuid;
