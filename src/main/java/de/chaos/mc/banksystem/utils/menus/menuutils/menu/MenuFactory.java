@@ -1,8 +1,13 @@
 package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
+
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 public class MenuFactory {
 
@@ -26,7 +31,10 @@ public class MenuFactory {
         return new Menu(inventoryType, title, listener);
     }
 
+    public Menu createCallbackMenu(InventoryType inventoryType, String title, Consumer<AnvilOutput> callback) {return new Menu(inventoryType, title, listener,callback);}
+
     public PagedMenu createPagedMenu(int size, String title) {
         return new PagedMenu(size, title, listener);
     }
+
 }

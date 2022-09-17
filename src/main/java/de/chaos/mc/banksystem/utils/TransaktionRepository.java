@@ -2,6 +2,7 @@ package de.chaos.mc.banksystem.utils;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import de.chaos.mc.banksystem.BankSystem;
+import de.chaos.mc.banksystem.events.TransaktionEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 
@@ -23,7 +24,7 @@ public class TransaktionRepository implements ITransaktionInterface {
     }
 
     @Override
-    public TransaktionLogsDAO newTransaktion(UUID uuid, UUID target, long amount) {
+    public TransaktionLogsDAO newTransaktion(UUID uuid, UUID target, int amount) {
         LocalDate localDate = LocalDate.now();
         String date = localDate.getDayOfMonth() + "-" + localDate.getMonth() + "-" + localDate.getYear();
 
@@ -44,6 +45,9 @@ public class TransaktionRepository implements ITransaktionInterface {
 
         Bukkit.getPlayer(uuid).sendMessage(Component.text("-" + amount + " zu " + Bukkit.getPlayer(target).getDisplayName()));
         Bukkit.getPlayer(target).sendMessage(Component.text("+" + amount + "von" + Bukkit.getPlayer(uuid).getDisplayName()));
+
+        TransaktionEvent event = new TransaktionEvent(uuid, target, amount);
+        Bukkit.getServer().getPluginManager().callEvent(event);
 
         return transaktionLogsDAO;
     }

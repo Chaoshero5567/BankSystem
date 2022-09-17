@@ -4,3 +4,11 @@ main: de.chaos.mc.banksystem.BankSystem
 api-version: 1.19
 prefix: BankSystem
 authors: [ Chaoshero5567 ]
+
+commands:
+  changePin:
+  transferMoney:
+  setCoinsBank:
+  setCoinsWallet:
+  wallet:
+  kontoauszug:

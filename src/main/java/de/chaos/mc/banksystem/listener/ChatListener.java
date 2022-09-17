@@ -34,10 +34,8 @@ public class ChatListener implements Listener {
                 if (text.matches("[0-9]+") && text.length() > 2) {
                     if (text.length() == 4) {
                         // Transfering money and setting status to neutral
-                        coinsInterface.changePing(player.getUniqueId(), Integer.parseInt(text));
-                        bankPlayer.setPinchangeChat(false);
-                        bankSystem.getBankPlayers().put(player.getUniqueId(), bankPlayer);
                         event.setCancelled(true);
+                        player.performCommand("changePin " + Integer.parseInt(text));
                     } else player.sendMessage(Component.text("Pin muss 4 Nummern lang sein"));
                 } else {
                     player.sendMessage("Bitte gib eine valide zahlt ein");
@@ -87,7 +85,7 @@ public class ChatListener implements Listener {
                   int amount = Integer.parseInt(text);
                   if (coinsInterface.hasEnoughCoins(player.getUniqueId(), amount)) {
 
-                      iTransaktionInterface.newTransaktion(player.getUniqueId(), coinsInterface.getUUID(bankPlayer.getTargetKontonummer()), amount);
+                      player.performCommand("transferMoney " + coinsInterface.getUUID(bankPlayer.getTargetKontonummer()) + " " + amount + " " + true);
 
                       bankPlayer.setTransaktionAmount(false);
                       bankSystem.getBankPlayers().put(player.getUniqueId(), bankPlayer);

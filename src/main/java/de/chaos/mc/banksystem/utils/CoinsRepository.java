@@ -165,4 +165,19 @@ public class CoinsRepository implements ICoinsInterface {
         }
         return kontonummer;
     }
+
+    @Override
+    public int getPin(UUID uuid) {
+        return 0;
+    }
+
+    @Override
+    public boolean isValidKonto(String kontonummer) {
+        return false;
+    }
+
+    @Override
+    public UUID getUUID(String Kontonummer) {
+        return null;
+    }
 }

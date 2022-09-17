@@ -1,19 +1,19 @@
 package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 
-import de.chaos.mc.banksystem.BankSystem;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 class MenuListener implements Listener {
 
@@ -36,6 +36,11 @@ class MenuListener implements Listener {
                 Menu m = openedMenus.get(p);
                 m.click(p, e.getSlot());
                 e.setCancelled(true);
+                if (e.getInventory().getType() == InventoryType.ANVIL) {
+                    if (e.getSlot() == 2) {
+                        p.closeInventory();
+                    }
+                }
             }
         }
     }
@@ -50,12 +55,23 @@ class MenuListener implements Listener {
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
-            if (openedMenus.containsKey(p)) openedMenus.remove(p);
+            Menu menu = null;
+            if (openedMenus.containsKey(p)) {
+                menu = openedMenus.get(p);
+                openedMenus.remove(p);
+
+                if (e.getInventory().getType() == InventoryType.ANVIL) {
+                    Inventory inventory = e.getInventory();
+                    if (inventory.getItem(2) != null) {
+                        AnvilOutput anvilOutput = new AnvilOutput(p.getUniqueId(), inventory.getItem(2));
+                        menu.getCallback().accept(anvilOutput);
+                    }
+                }
+            }
         }
     }
 
     public void openMenu(Player p, Menu menu) {
         openedMenus.put(p, menu);
     }
-
 }

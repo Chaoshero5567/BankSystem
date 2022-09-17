@@ -18,6 +18,7 @@ public class Menu {
     private String title;
     private InventoryType inventoryType;
     private Inventory inv;
+    private Consumer<AnvilOutput> callback;
 
     protected Menu(int size, String title, MenuListener lister) {
         this.size = size;
@@ -25,10 +26,18 @@ public class Menu {
         this.listener = lister;
     }
 
+
     protected Menu(InventoryType inventoryType, String title, MenuListener lister) {
         this.inventoryType = inventoryType;
         this.title = title;
         this.listener = lister;
+    }
+
+    protected Menu(InventoryType inventoryType, String title, MenuListener lister, Consumer<AnvilOutput> callback) {
+        this.inventoryType = inventoryType;
+        this.title = title;
+        this.listener = lister;
+        this.callback = callback;
     }
 
     public void additem(int slot, ItemStack itemStack, Consumer<Player> callback) {
@@ -68,6 +77,10 @@ public class Menu {
         list.forEach(i -> {
             if (i.getSlot() == slot) i.click(p);
         });
+    }
+
+    public Consumer<AnvilOutput> getCallback() {
+        return callback;
     }
 
     public List<MenuItem> getItems() {

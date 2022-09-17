@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface ITransaktionInterface {
 
-    public TransaktionLogsDAO newTransaktion(UUID uuid, UUID target, long amount);
+    public TransaktionLogsDAO newTransaktion(UUID uuid, UUID target, int amount);
 
     public List<TransaktionLogsDAO> getLastTransaktions(UUID uuid);
 }
