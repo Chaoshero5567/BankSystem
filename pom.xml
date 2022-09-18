@@ -25,6 +25,7 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <outputDirectory>C:\Users\orkan\Desktop</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>

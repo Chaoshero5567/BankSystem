@@ -4,6 +4,7 @@ import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 
 import java.sql.SQLException;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CoinsRepository implements ICoinsInterface {
     public JdbcPooledConnectionSource connectionSource;
@@ -140,8 +141,12 @@ public class CoinsRepository implements ICoinsInterface {
 
     @Override
     public long createAccount(UUID uuid) {
-        int pin = RandomString.digits.charAt(4);
-        String Kontonummer = new RandomString(8).toString();
+        RandomString pinGen = new RandomString(4, ThreadLocalRandom.current(), RandomString.digits);
+        int pin = Integer.parseInt(pinGen.nextString());
+
+        RandomString kontoGen = new RandomString(8, ThreadLocalRandom.current());
+
+        String Kontonummer = kontoGen.nextString();
 
         CoinsDAO coinsDAO = CoinsDAO.builder()
                 .uuid(uuid)
