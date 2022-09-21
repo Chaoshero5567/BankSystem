@@ -9,16 +9,29 @@ public class ItemsConfig {
     HashMap<String, Object> defaults;
     private FileBuilder fileBuilder;
     @Getter
-    public final String host = fileBuilder.getString("Bankkarte").replaceAll("&", "§");
+    public final String bankarte;
     @Getter
-    public final String database = fileBuilder.getString("Kontoauszug").replaceAll("&", "§");
+    public final String Kontoauszug;
     @Getter
-    public final String user = fileBuilder.getString("Kontoauszug-Format").replaceAll("&", "§");
+    public final String bankBlock;
+    @Getter
+    public final String bankkartenItem;
     public ItemsConfig(Plugin plugin) {
         defaults = new HashMap<>();
         defaults.put("Bankkarte", "Bankkarte");
         defaults.put("Kontoauszug", "Kontoauszug");
-        defaults.put("Kontoauszug-Format", "%date% - %Kontonummer%");
-        fileBuilder = new FileBuilder(plugin.getDataFolder().getPath(), "SQLConfig", defaults);
+        defaults.put("bankblock", "ITEM_FRAME");
+        defaults.put("bankkartenItem", "NAME_TAG");
+        fileBuilder = new FileBuilder(plugin.getDataFolder().getPath(), "ItemConfig", defaults);
+
+        bankarte = fileBuilder.getString("Bankkarte");
+        Kontoauszug = fileBuilder.getString("Kontoauszug");
+        bankBlock = fileBuilder.getString("bankblock");
+        bankkartenItem = fileBuilder.getString("bankkartenItem");
+
+    }
+
+    public FileBuilder getFileBuilder() {
+        return fileBuilder;
     }
 }

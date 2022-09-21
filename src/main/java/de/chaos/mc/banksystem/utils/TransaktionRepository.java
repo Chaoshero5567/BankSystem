@@ -2,6 +2,7 @@ package de.chaos.mc.banksystem.utils;
 
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import de.chaos.mc.banksystem.BankSystem;
+import de.chaos.mc.banksystem.config.ItemsConfig;
 import de.chaos.mc.banksystem.events.TransaktionEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -16,19 +17,24 @@ public class TransaktionRepository implements ITransaktionInterface {
     public JdbcPooledConnectionSource connectionSource;
     public ICoinsInterface iCoinsInterface;
     public DAOManager<TransaktionLogsDAO, Long> daoManager;
+    ItemsConfig itemsConfig;
 
-    public TransaktionRepository(JdbcPooledConnectionSource jdbcPooledConnectionSource) {
+    public TransaktionRepository(JdbcPooledConnectionSource jdbcPooledConnectionSource, ItemsConfig config) {
         this.connectionSource = jdbcPooledConnectionSource;
         this.daoManager = new DAOManager<TransaktionLogsDAO, Long>(TransaktionLogsDAO.class, connectionSource);
         this.iCoinsInterface = BankSystem.getInstance().getICoinsInterface();
+        this.itemsConfig = config;
     }
 
     @Override
     public TransaktionLogsDAO newTransaktion(UUID uuid, UUID target, int amount) {
         LocalDate localDate = LocalDate.now();
-        String date = localDate.getDayOfMonth() + "-" + localDate.getMonth() + "-" + localDate.getYear();
+        String dayOfMonth = String.valueOf(localDate.getDayOfMonth());
+        String month = localDate.getMonth().toString();
+        String year = String.valueOf(localDate.getYear());
+        String date = dayOfMonth + " - " + month + " - " + year;
 
-        TransaktionLogsDAO transaktionLogsDAO = TransaktionLogsDAO.builder()
+                TransaktionLogsDAO transaktionLogsDAO = TransaktionLogsDAO.builder()
                 .uuid(uuid)
                 .target_uuid(target)
                 .amount(amount)

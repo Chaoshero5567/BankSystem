@@ -9,10 +9,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class WalletCommand implements CommandExecutor {
+public class walletCommand implements CommandExecutor {
     ICoinsInterface iCoinsInterface;
 
-    public WalletCommand(ICoinsInterface iCoinsInterface) {
+    public walletCommand(ICoinsInterface iCoinsInterface) {
         this.iCoinsInterface = iCoinsInterface;
     }
 

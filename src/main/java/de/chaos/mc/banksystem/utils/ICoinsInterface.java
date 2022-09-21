@@ -1,5 +1,6 @@
 package de.chaos.mc.banksystem.utils;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface ICoinsInterface {
@@ -23,7 +24,7 @@ public interface ICoinsInterface {
 
     public long changePing(UUID uuid, int pin);
 
-    public long createAccount(UUID uuid);
+    public CoinsDAO createAccount(UUID uuid);
 
     public String getKontonummer(UUID uuid);
 
@@ -32,4 +33,8 @@ public interface ICoinsInterface {
     public boolean isValidKonto(String kontonummer);
 
     public UUID getUUID(String Kontonummer);
+
+    public boolean hasAccount(UUID uuid);
+
+    public List<CoinsDAO> getAllAccounts();
 }

@@ -11,10 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class KontoauszugCommand implements CommandExecutor {
+public class kontoauszugCommand implements CommandExecutor {
     ITransaktionInterface transaktionInterface;
 
-    public KontoauszugCommand(ITransaktionInterface iTransaktionInterface) {
+    public kontoauszugCommand(ITransaktionInterface iTransaktionInterface) {
         this.transaktionInterface = iTransaktionInterface;
     }
 

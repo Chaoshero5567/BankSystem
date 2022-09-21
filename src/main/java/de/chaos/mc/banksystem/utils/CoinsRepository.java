@@ -3,8 +3,12 @@ package de.chaos.mc.banksystem.utils;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CoinsRepository implements ICoinsInterface {
     public JdbcPooledConnectionSource connectionSource;
@@ -140,22 +144,31 @@ public class CoinsRepository implements ICoinsInterface {
     }
 
     @Override
-    public long createAccount(UUID uuid) {
+    public CoinsDAO createAccount(UUID uuid) {
         RandomString pinGen = new RandomString(4, ThreadLocalRandom.current(), RandomString.digits);
         int pin = Integer.parseInt(pinGen.nextString());
 
         RandomString kontoGen = new RandomString(8, ThreadLocalRandom.current());
 
-        String Kontonummer = kontoGen.nextString();
+        String kontonummer = kontoGen.nextString();
+        while (isValidKonto(kontonummer)) {
+            kontonummer = kontoGen.nextString();
+        }
 
         CoinsDAO coinsDAO = CoinsDAO.builder()
                 .uuid(uuid)
                 .coins(0)
                 .bankCoins(1000)
                 .pin(pin)
-                .kontoNummer(Kontonummer)
+                .kontoNummer(kontonummer)
                 .build();
-        return 0;
+
+        try {
+            daoManager.getDAO().update(coinsDAO);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return coinsDAO;
     }
 
     @Override
@@ -173,16 +186,62 @@ public class CoinsRepository implements ICoinsInterface {
 
     @Override
     public int getPin(UUID uuid) {
-        return 0;
+        int pin = 0;
+        try {
+            pin = daoManager.getDAO().queryForId(uuid).getPin();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pin;
     }
 
     @Override
     public boolean isValidKonto(String kontonummer) {
-        return false;
+        AtomicBoolean b = new AtomicBoolean(false);
+        if (getAllAccounts().isEmpty()) {
+            return false;
+        }
+        getAllAccounts().forEach(coinsDAO -> {
+            if (!b.get()) {
+                if (coinsDAO.getKontoNummer() == kontonummer) {
+                    b.set(true);
+                }
+            }
+        });
+        return b.get();
     }
 
     @Override
     public UUID getUUID(String Kontonummer) {
-        return null;
+        AtomicReference<UUID> uuid = null;
+        getAllAccounts().forEach(coinsDAO -> {
+            if (coinsDAO.kontoNummer == Kontonummer) {
+                uuid.set(coinsDAO.getUuid());
+            }
+        });
+        return uuid.get();
+    }
+
+    @Override
+    public boolean hasAccount(UUID uuid) {
+        try {
+            if (daoManager.getDAO().queryForId(uuid) != null) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    @Override
+    public List<CoinsDAO> getAllAccounts() {
+        List<CoinsDAO> daos = new ArrayList<>();
+        try {
+            daos = daoManager.getDAO().queryForAll();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return daos;
     }
 }

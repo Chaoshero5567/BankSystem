@@ -19,6 +19,7 @@ public class BankKartenFactory {
                       "KartenID: " + kartenID;
 
         ItemStack karte = new ItemBuilder(Material.NAME_TAG).name(name).setlore(lore).itemStack();
+        player.getInventory().addItem(karte);
     }
 
 }
