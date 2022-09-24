@@ -28,7 +28,7 @@ public class CoinsDAO {
     @DatabaseField(columnName = COINS_FIELD)
     public long coins;
 
-    @DatabaseField(id = true, columnName = KONTO_NUMMER)
+    @DatabaseField(columnName = KONTO_NUMMER)
     public String kontoNummer;
 
     @DatabaseField(columnName = PIN_FIELD)

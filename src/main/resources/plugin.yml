@@ -13,4 +13,4 @@ commands:
   wallet:
   kontoauszug:
   setCoins:
-  setCoinsBank:
+  createAccount:
