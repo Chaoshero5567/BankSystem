@@ -6,6 +6,7 @@ import de.chaos.mc.banksystem.utils.ICoinsInterface;
 import de.chaos.mc.banksystem.utils.ITransaktionInterface;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,9 +22,14 @@ public class ChatListener implements Listener {
     }
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
+
+
         Player player = event.getPlayer();
         if (bankSystem.getBankPlayers().containsKey(player.getUniqueId())) {
             BankPlayer bankPlayer = bankSystem.getBankPlayers().get(player.getUniqueId());
+
+            Bukkit.getConsoleSender().sendMessage("Debug: ");
+            Bukkit.getConsoleSender().sendMessage(bankPlayer.toString());
 
             // Asking if Player wants to change pin
             if (bankPlayer.isPinchangeChat()) {

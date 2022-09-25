@@ -6,7 +6,7 @@
 
     <groupId>de.chaos.mc</groupId>
     <artifactId>BankSystem</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>BankSystem</name>

@@ -1,12 +1,13 @@
 package de.chaos.mc.banksystem.commands.playercommands;
 
+import de.chaos.mc.banksystem.BankSystem;
 import de.chaos.mc.banksystem.config.ItemsConfig;
 import de.chaos.mc.banksystem.utils.BankKartenFactory;
 import de.chaos.mc.banksystem.utils.CoinsDAO;
 import de.chaos.mc.banksystem.utils.ICoinsInterface;
 import de.chaos.mc.banksystem.utils.menus.BankMenus;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ public class createAccountCommand implements CommandExecutor {
         this.bankMenus = bankMenus;
         this.iCoinsInterface = iCoinsInterface;
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (sender instanceof Player) {
@@ -31,7 +33,8 @@ public class createAccountCommand implements CommandExecutor {
             Material cardItem = Material.getMaterial(itemsConfig.getBankkartenItem());
             if (player.getItemInHand().getType() == cardItem) {
                 ItemStack item = player.getItemInHand();
-                if (item.lore().contains(iCoinsInterface.getKontonummer(player.getUniqueId()))) {
+                NamespacedKey card = new NamespacedKey(BankSystem.getInstance(), "card");
+                if (item.getItemMeta().getPersistentDataContainer().getKeys().contains(card)) {
                     bankMenus.openMenu(player);
                 }
             } else {
@@ -39,8 +42,8 @@ public class createAccountCommand implements CommandExecutor {
                     if (!iCoinsInterface.hasAccount(player.getUniqueId())) {
                         CoinsDAO coinsDAO = iCoinsInterface.createAccount(player.getUniqueId());
                         BankKartenFactory.createBankKarte(player, coinsDAO.getKontoNummer());
-                        player.sendMessage(Component.text("Bank account erstellt"));
-                        player.sendMessage(Component.text("Dein Pin ist " + coinsDAO.getPin()) + ". Diesen bitte aufschreiben und nicht verlieren!");
+                        player.sendMessage("Bank account erstellt");
+                        player.sendMessage("Dein Pin ist " + coinsDAO.getPin() + ". Diesen bitte aufschreiben und nicht verlieren!");
                     }
                 }
             }

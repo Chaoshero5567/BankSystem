@@ -164,7 +164,7 @@ public class CoinsRepository implements ICoinsInterface {
                 .build();
 
         try {
-            daoManager.getDAO().update(coinsDAO);
+            daoManager.getDAO().create(coinsDAO);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -13,5 +13,5 @@ import java.util.UUID;
 @Getter
 public class AnvilOutput {
     public UUID uuid;
-    @Nullable public ItemStack output;
+    public ItemStack output;
 }

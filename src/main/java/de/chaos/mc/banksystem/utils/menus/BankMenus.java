@@ -8,6 +8,7 @@ import de.chaos.mc.banksystem.utils.menus.menuutils.menu.AnvilOutput;
 import de.chaos.mc.banksystem.utils.menus.menuutils.menu.Menu;
 import de.chaos.mc.banksystem.utils.menus.menuutils.menu.MenuFactory;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -28,7 +29,7 @@ public class BankMenus {
     }
 
     public void openMenu(Player player) {
-        Menu menu = menuFactory.createMenu(5 * 1, "Bank");
+        Menu menu = menuFactory.createMenu(9*1, "Bank");
         BankPlayer bankPlayer = BankSystem.getInstance().getBankPlayers().get(player.getUniqueId());
 
         ItemStack abhebenItem = new ItemBuilder(Material.GOLD_INGOT).name("abheben").itemStack();
@@ -80,6 +81,7 @@ public class BankMenus {
     }
 
     public void openPinMenu(Player player, Consumer<AnvilOutput> callback) {
+        Bukkit.getConsoleSender().sendMessage("Debug02");
         ItemStack nametag = new ItemBuilder(Material.NAME_TAG).name("pin").itemStack();
         Menu anvil = menuFactory.createCallbackMenu(InventoryType.ANVIL, "Pin eingeben", callback);
         anvil.additem(0, nametag, null);
@@ -87,11 +89,14 @@ public class BankMenus {
     }
 
     private boolean rightPin(AnvilOutput anvilOutput) {
-        boolean b = false;
-        String name = anvilOutput.getOutput().displayName().toString();
-        String pin = String.valueOf(coinsInterface.getPin(anvilOutput.getUuid()));
+        Bukkit.getConsoleSender().sendMessage(anvilOutput.getOutput().displayName());
+        Bukkit.getConsoleSender().sendMessage("Debug03");
+        Component name = anvilOutput.getOutput().displayName();
+        Component pin = Component.text(coinsInterface.getPin(anvilOutput.getUuid()));
 
-        if (Objects.equals(name, pin)) b = true;
-        return b;
+        if (name.equals(pin)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,12 +1,8 @@
 package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 public class MenuFactory {
@@ -18,8 +14,7 @@ public class MenuFactory {
     }
 
     public static MenuFactory register(Plugin plugin) {
-        MenuListener l = new MenuListener();
-        Bukkit.getPluginManager().registerEvents(l, plugin);
+        MenuListener l = MenuListener.register(plugin);
         return new MenuFactory(l);
     }
 

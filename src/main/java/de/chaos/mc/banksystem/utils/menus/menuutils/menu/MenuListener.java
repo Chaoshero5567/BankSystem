@@ -1,6 +1,7 @@
 package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,12 +36,16 @@ class MenuListener implements Listener {
             if (openedMenus.containsKey(p)) {
                 Menu m = openedMenus.get(p);
                 m.click(p, e.getSlot());
-                e.setCancelled(true);
-                if (e.getInventory().getType() == InventoryType.ANVIL) {
+                if (m.getCallback() != null) {
+                    Bukkit.getConsoleSender().sendMessage("Debug01");
                     if (e.getSlot() == 2) {
+                            Bukkit.getConsoleSender().sendMessage("Debug");
+                            AnvilOutput anvilOutput = new AnvilOutput(p.getUniqueId(), e.getCursor());
+                            m.getCallback().accept(anvilOutput);
                         p.closeInventory();
                     }
                 }
+                e.setCancelled(true);
             }
         }
     }
@@ -55,18 +60,8 @@ class MenuListener implements Listener {
     public void onInventoryClose(InventoryCloseEvent e) {
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
-            Menu menu = null;
             if (openedMenus.containsKey(p)) {
-                menu = openedMenus.get(p);
                 openedMenus.remove(p);
-
-                if (e.getInventory().getType() == InventoryType.ANVIL) {
-                    Inventory inventory = e.getInventory();
-                    if (inventory.getItem(2) != null) {
-                        AnvilOutput anvilOutput = new AnvilOutput(p.getUniqueId(), inventory.getItem(2));
-                        menu.getCallback().accept(anvilOutput);
-                    }
-                }
             }
         }
     }

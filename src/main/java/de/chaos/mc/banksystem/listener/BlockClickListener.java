@@ -17,11 +17,12 @@ public class BlockClickListener implements Listener {
     public void onBlockClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
+        if (event.getClickedBlock() == null) return;
             Material block = event.getClickedBlock().getType();
             if (Material.getMaterial(itemsConfig.getBankBlock()) != null) {
                 Material confBlock = Material.getMaterial(itemsConfig.getBankBlock());
                 if (block == confBlock) {
-                    player.performCommand("createAcc");
+                    player.performCommand("createAccount");
                 }
             }
     }
