@@ -7,15 +7,12 @@ import de.chaos.mc.banksystem.utils.ItemBuilder;
 import de.chaos.mc.banksystem.utils.menus.menuutils.menu.AnvilOutput;
 import de.chaos.mc.banksystem.utils.menus.menuutils.menu.Menu;
 import de.chaos.mc.banksystem.utils.menus.menuutils.menu.MenuFactory;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class BankMenus {
@@ -40,11 +37,11 @@ public class BankMenus {
             openPinMenu(player1, anvilOutput -> {
                 if (rightPin(anvilOutput)) {
                 player1.closeInventory();
-                player1.sendMessage(Component.text("Bitte gib die menge an!"));
+                player1.sendMessage("Bitte gib die menge an!");
                 bankPlayer.setAbhebenChat(true);
                 BankSystem.getInstance().getBankPlayers().put(player1.getUniqueId(), bankPlayer);
             } else {
-                player1.sendMessage(Component.text("Bitte einen gültigen pin eingeben"));
+                player1.sendMessage("Bitte einen gültigen pin eingeben");
                 player1.closeInventory();
             }});
         });
@@ -53,11 +50,11 @@ public class BankMenus {
             openPinMenu(player1, anvilOutput -> {
                 if (this.rightPin(anvilOutput)) {
                     player1.closeInventory();
-                    player1.sendMessage(Component.text("Bitte gib den neuen pin ein!"));
+                    player1.sendMessage("Bitte gib den neuen pin ein!");
                     bankPlayer.setPinchangeChat(true);
                     BankSystem.getInstance().getBankPlayers().put(player1.getUniqueId(), bankPlayer);
                 } else {
-                    player1.sendMessage(Component.text("Bitte einen gültigen pin eingeben"));
+                    player1.sendMessage("Bitte einen gültigen pin eingeben");
                     player1.closeInventory();
                 }
             });
@@ -67,11 +64,11 @@ public class BankMenus {
             openPinMenu(player1, anvilOutput -> {
                 if (rightPin(anvilOutput)) {
                     player1.closeInventory();
-                    player1.sendMessage(Component.text("Bitte gib die Banknummer des anderen Spielers ein!"));
+                    player1.sendMessage("Bitte gib die Banknummer des anderen Spielers ein!");
                     bankPlayer.setKontonummerChat(true);
                     BankSystem.getInstance().getBankPlayers().put(player1.getUniqueId(), bankPlayer);
                 } else {
-                    player1.sendMessage(Component.text("Bitte einen gültigen pin eingeben"));
+                    player1.sendMessage("Bitte einen gültigen pin eingeben");
                     player1.closeInventory();
                 }
             });
@@ -89,10 +86,10 @@ public class BankMenus {
     }
 
     private boolean rightPin(AnvilOutput anvilOutput) {
-        Bukkit.getConsoleSender().sendMessage(anvilOutput.getOutput().displayName());
+        Bukkit.getConsoleSender().sendMessage(anvilOutput.getOutput().getItemMeta().getDisplayName());
         Bukkit.getConsoleSender().sendMessage("Debug03");
-        Component name = anvilOutput.getOutput().displayName();
-        Component pin = Component.text(coinsInterface.getPin(anvilOutput.getUuid()));
+        String name = anvilOutput.getOutput().getItemMeta().getDisplayName();
+        String pin = String.valueOf(coinsInterface.getPin(anvilOutput.getUuid()));
 
         if (name.equals(pin)) {
             return true;

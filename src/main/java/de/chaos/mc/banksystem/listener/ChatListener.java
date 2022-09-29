@@ -4,12 +4,11 @@ import de.chaos.mc.banksystem.BankSystem;
 import de.chaos.mc.banksystem.utils.BankPlayer;
 import de.chaos.mc.banksystem.utils.ICoinsInterface;
 import de.chaos.mc.banksystem.utils.ITransaktionInterface;
-import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
     BankSystem bankSystem;
@@ -21,7 +20,7 @@ public class ChatListener implements Listener {
         this.coinsInterface = coinsInterface;
     }
     @EventHandler
-    public void onPlayerChat(AsyncChatEvent event) {
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
 
 
         Player player = event.getPlayer();
@@ -36,13 +35,13 @@ public class ChatListener implements Listener {
                 // Canceling event so no message appears in chat
                 event.setCancelled(true);
                 // Validating Pin format and length
-                String text = event.message().toString();
+                String text = event.getMessage();
                 if (text.matches("[0-9]+") && text.length() > 2) {
                     if (text.length() == 4) {
                         // Transfering money and setting status to neutral
                         event.setCancelled(true);
                         player.performCommand("changePin " + Integer.parseInt(text));
-                    } else player.sendMessage(Component.text("Pin muss 4 Nummern lang sein"));
+                    } else player.sendMessage("Pin muss 4 Nummern lang sein");
                 } else {
                     player.sendMessage("Bitte gib eine valide zahlt ein");
                 }
@@ -52,7 +51,7 @@ public class ChatListener implements Listener {
                 // Canceling event so no message appears in chat
                 event.setCancelled(true);
                 // Validating amount format
-                String text = event.message().toString();
+                String text = event.getMessage();
                 if (text.matches("[0-9]+")) {
                     int amount = Integer.parseInt(text);
                     if (coinsInterface.hasEnoughCoins(player.getUniqueId(), amount)) {
@@ -61,7 +60,7 @@ public class ChatListener implements Listener {
                         coinsInterface.addCoins(player.getUniqueId(), amount);
                         bankPlayer.setAbhebenChat(false);
                         bankSystem.getBankPlayers().put(player.getUniqueId(), bankPlayer);
-                    } else player.sendMessage(Component.text("Du hast nicht genug Geld"));
+                    } else player.sendMessage("Du hast nicht genug Geld");
                 } else {
                     player.sendMessage("Bitte gib eine valide zahlt ein");
                 }
@@ -70,12 +69,12 @@ public class ChatListener implements Listener {
             if (bankPlayer.isKontonummerChat()) {
                 // Canceling event so no message appears in chat
                 event.setCancelled(true);
-                String Kontonummer = String.valueOf(event.message());
+                String Kontonummer = event.getMessage();
                 if (coinsInterface.isValidKonto(Kontonummer)) {
                     bankPlayer.setKontonummerChat(false);
                     bankPlayer.setTransaktionAmount(true);
                     bankPlayer.setTargetKontonummer(Kontonummer);
-                    player.sendMessage(Component.text("Wie viel willst du überweisen?"));
+                    player.sendMessage("Wie viel willst du überweisen?");
                     bankSystem.getBankPlayers().put(player.getUniqueId(), bankPlayer);
                 } else {
                     player.sendMessage("Bitte gib eine valide Kontonummer ein");
@@ -84,9 +83,9 @@ public class ChatListener implements Listener {
             if (bankPlayer.isTransaktionAmount()) {
                 // Canceling event so no message appears in chat
                 event.setCancelled(true);
-                String Kontonummer = String.valueOf(event.message());
+                String Kontonummer = event.getMessage();
 
-                String text = event.message().toString();
+                String text = event.getMessage();
                 if (text.matches("[0-9]+")) {
                   int amount = Integer.parseInt(text);
                   if (coinsInterface.hasEnoughCoins(player.getUniqueId(), amount)) {

@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 @AllArgsConstructor
 @Getter
@@ -19,28 +18,23 @@ public class PinChangeEvent extends Event {
     private int newPin;
 
 
-    @NotNull
     public HumanEntity getPlayer() {
         return player;
     }
 
-    @NotNull
     public int getNewPin() {
         return newPin;
     }
 
-    @NotNull
     public int getOldPin() {
         return oldPin;
     }
 
-    @NotNull
     @Override
     public HandlerList getHandlers() {
         return handlers;
     }
 
-    @NotNull
     public static HandlerList getHandlerList() {
         return handlers;
     }

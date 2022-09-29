@@ -4,7 +4,6 @@ import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import de.chaos.mc.banksystem.BankSystem;
 import de.chaos.mc.banksystem.config.ItemsConfig;
 import de.chaos.mc.banksystem.events.TransaktionEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 
 import java.sql.SQLException;
@@ -49,8 +48,8 @@ public class TransaktionRepository implements ITransaktionInterface {
         iCoinsInterface.addCoinsBank(target, amount);
         iCoinsInterface.removeCoinsBank(uuid, amount);
 
-        Bukkit.getPlayer(uuid).sendMessage(Component.text("-" + amount + " zu " + Bukkit.getPlayer(target).getDisplayName()));
-        Bukkit.getPlayer(target).sendMessage(Component.text("+" + amount + "von" + Bukkit.getPlayer(uuid).getDisplayName()));
+        Bukkit.getPlayer(uuid).sendMessage("-" + amount + " zu " + Bukkit.getPlayer(target).getDisplayName());
+        Bukkit.getPlayer(target).sendMessage("+" + amount + "von" + Bukkit.getPlayer(uuid).getDisplayName());
 
         TransaktionEvent event = new TransaktionEvent(uuid, target, amount);
         Bukkit.getServer().getPluginManager().callEvent(event);

@@ -13,7 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+
 
 public class createAccountCommand implements CommandExecutor {
     ItemsConfig itemsConfig;
@@ -27,7 +27,7 @@ public class createAccountCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand( CommandSender sender,  Command command,  String label,  String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Material cardItem = Material.getMaterial(itemsConfig.getBankkartenItem());

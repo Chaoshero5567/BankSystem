@@ -1,6 +1,5 @@
 package de.chaos.mc.banksystem.config;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -52,7 +51,7 @@ public class FileBuilder {
         for (String key : configuration.getKeys(true)) {
             cache.put(key, configuration.get(key));
         }
-        Bukkit.getConsoleSender().sendMessage(Component.text(cache.toString()));
+        Bukkit.getConsoleSender().sendMessage(cache.toString());
     }
 
     // Reloads config from file
