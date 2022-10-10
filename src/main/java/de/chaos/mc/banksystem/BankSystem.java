@@ -111,6 +111,10 @@ public final class BankSystem extends JavaPlugin {
         return transaktionInterface;
     }
 
+    public BankMenus getBankMenus() {
+        return bankMenus;
+    }
+
     public ICoinsInterface getICoinsInterface() {
         return iCoinsInterface;
     }

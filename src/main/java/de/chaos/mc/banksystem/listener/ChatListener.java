@@ -52,6 +52,8 @@ public class ChatListener implements Listener {
                     if (event.getMessage().length() == 4) {
                         // Transfering money and setting status to neutral
                         ChangePin.change(player, value);
+                        bankPlayer.setPinchangeChat(false);
+                        BankSystem.getInstance().getBankPlayers().put(player.getUniqueId(), bankPlayer);
                     } else player.sendMessage("Pin muss 4 Nummern lang sein");
                 } else {
                     player.sendMessage("Bitte gib eine valide zahlt ein");
