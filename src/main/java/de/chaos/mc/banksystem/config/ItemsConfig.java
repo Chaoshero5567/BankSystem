@@ -6,8 +6,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 
 public class ItemsConfig {
-    HashMap<String, Object> defaults;
-    private FileBuilder fileBuilder;
     @Getter
     public final String bankarte;
     @Getter
@@ -16,6 +14,9 @@ public class ItemsConfig {
     public final String bankBlock;
     @Getter
     public final String bankkartenItem;
+    HashMap<String, Object> defaults;
+    private final FileBuilder fileBuilder;
+
     public ItemsConfig(Plugin plugin) {
         defaults = new HashMap<>();
         defaults.put("Bankkarte", "Bankkarte");

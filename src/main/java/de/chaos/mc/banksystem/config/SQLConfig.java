@@ -6,8 +6,6 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 
 public class SQLConfig {
-    HashMap<String, Object> defaults;
-    private FileBuilder fileBuilder;
     @Getter
     public final String host;
     @Getter
@@ -18,6 +16,8 @@ public class SQLConfig {
     public final String user;
     @Getter
     public final String password;
+    HashMap<String, Object> defaults;
+    private final FileBuilder fileBuilder;
 
     public SQLConfig(Plugin plugin) {
         defaults = new HashMap<>();

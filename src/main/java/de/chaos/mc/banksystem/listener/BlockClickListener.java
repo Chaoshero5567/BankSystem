@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class BlockClickListener implements Listener {
     ItemsConfig itemsConfig;
+
     public BlockClickListener(ItemsConfig config) {
         this.itemsConfig = config;
     }
@@ -18,12 +19,12 @@ public class BlockClickListener implements Listener {
         Player player = event.getPlayer();
 
         if (event.getClickedBlock() == null) return;
-            Material block = event.getClickedBlock().getType();
-            if (Material.getMaterial(itemsConfig.getBankBlock()) != null) {
-                Material confBlock = Material.getMaterial(itemsConfig.getBankBlock());
-                if (block == confBlock) {
-                    player.performCommand("createAccount");
-                }
+        Material block = event.getClickedBlock().getType();
+        if (Material.getMaterial(itemsConfig.getBankBlock()) != null) {
+            Material confBlock = Material.getMaterial(itemsConfig.getBankBlock());
+            if (block == confBlock) {
+                player.performCommand("createAccount");
             }
+        }
     }
 }

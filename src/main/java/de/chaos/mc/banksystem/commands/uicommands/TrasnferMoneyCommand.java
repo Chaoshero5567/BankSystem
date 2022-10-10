@@ -1,14 +1,12 @@
 package de.chaos.mc.banksystem.commands.uicommands;
 
-import de.chaos.mc.banksystem.events.TransaktionEvent;
 import de.chaos.mc.banksystem.utils.ITransaktionInterface;
+import de.chaos.mc.banksystem.utils.Transaktion;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 public class TrasnferMoneyCommand implements CommandExecutor {
     ITransaktionInterface transaktionInterface;
@@ -18,19 +16,14 @@ public class TrasnferMoneyCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand( CommandSender sender,  Command command,  String label,  String[] args) {
-        if (args.length == 3) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 2) {
             Player player = (Player) sender;
-            UUID target = UUID.fromString(args[0]);
+            Player target = Bukkit.getPlayer(args[0]);
             int amount = Integer.parseInt(args[1]);
-            Boolean gui = Boolean.valueOf(args[2]);
-            if (gui) {
-                transaktionInterface.newTransaktion(player.getUniqueId(), target, amount);
-                TransaktionEvent event = new TransaktionEvent(player.getUniqueId(), target, amount);
-                Bukkit.getServer().getPluginManager().callEvent(event);
-            } else {
-                player.sendMessage("This is a GuiLocked command");
-            }
+
+            Transaktion.transferMoney(player, target, amount);
+
         } else {
             sender.sendMessage("This is a GuiLocked command");
         }

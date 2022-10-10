@@ -15,10 +15,9 @@ public class Menu {
     protected List<MenuItem> items = new ArrayList<>();
     protected int size;
     protected MenuListener listener;
-    private String title;
+    private final String title;
     private InventoryType inventoryType;
     private Inventory inv;
-    private Consumer<AnvilOutput> callback;
 
     protected Menu(int size, String title, MenuListener lister) {
         this.size = size;
@@ -33,12 +32,6 @@ public class Menu {
         this.listener = lister;
     }
 
-    protected Menu(InventoryType inventoryType, String title, MenuListener lister, Consumer<AnvilOutput> callback) {
-        this.inventoryType = inventoryType;
-        this.title = title;
-        this.listener = lister;
-        this.callback = callback;
-    }
 
     public void additem(int slot, ItemStack itemStack, Consumer<Player> callback) {
         items.add(new MenuItem(slot, itemStack, callback));
@@ -79,9 +72,6 @@ public class Menu {
         });
     }
 
-    public Consumer<AnvilOutput> getCallback() {
-        return callback;
-    }
 
     public List<MenuItem> getItems() {
         return items;

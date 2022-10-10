@@ -12,9 +12,11 @@ import de.chaos.mc.banksystem.config.ItemsConfig;
 import de.chaos.mc.banksystem.config.SQLConfig;
 import de.chaos.mc.banksystem.listener.BlockClickListener;
 import de.chaos.mc.banksystem.listener.ChatListener;
+import de.chaos.mc.banksystem.listener.JoinListener;
 import de.chaos.mc.banksystem.utils.*;
 import de.chaos.mc.banksystem.utils.menus.BankMenus;
 import de.chaos.mc.banksystem.utils.menus.menuutils.menu.MenuFactory;
+import de.chaos.mc.banksystem.utils.menus.menuutils.menu.PinObject;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +33,7 @@ public final class BankSystem extends JavaPlugin {
     private JdbcPooledConnectionSource source;
     private ICoinsInterface iCoinsInterface;
     private HashMap<UUID, BankPlayer> bankPlayers;
+    private HashMap<UUID, PinObject> pinItems;
     private BankMenus bankMenus;
     private MenuFactory menuFactory;
     private ITransaktionInterface transaktionInterface;
@@ -44,6 +47,7 @@ public final class BankSystem extends JavaPlugin {
 
         instance = this;
         bankPlayers = new HashMap<>();
+        pinItems = new HashMap<>();
         menuFactory = MenuFactory.register(this);
 
 
@@ -79,6 +83,7 @@ public final class BankSystem extends JavaPlugin {
         PluginManager manager = Bukkit.getPluginManager();
         manager.registerEvents(new BlockClickListener(itemsConfig), this);
         manager.registerEvents(new ChatListener(this, transaktionInterface, iCoinsInterface), this);
+        manager.registerEvents(new JoinListener(), this);
     }
 
     public void registerCommands() {
@@ -102,11 +107,19 @@ public final class BankSystem extends JavaPlugin {
         }
     }
 
+    public ITransaktionInterface getTransaktionInterface() {
+        return transaktionInterface;
+    }
+
     public ICoinsInterface getICoinsInterface() {
         return iCoinsInterface;
     }
 
     public HashMap<UUID, BankPlayer> getBankPlayers() {
         return bankPlayers;
+    }
+
+    public HashMap<UUID, PinObject> getPinItems() {
+        return pinItems;
     }
 }

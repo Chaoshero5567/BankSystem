@@ -3,11 +3,9 @@ package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
-import java.util.function.Consumer;
-
 public class MenuFactory {
 
-    private MenuListener listener;
+    private final MenuListener listener;
 
     public MenuFactory(MenuListener listener) {
         this.listener = listener;
@@ -25,8 +23,6 @@ public class MenuFactory {
     public Menu createInventoryTypeMenu(InventoryType inventoryType, String title) {
         return new Menu(inventoryType, title, listener);
     }
-
-    public Menu createCallbackMenu(InventoryType inventoryType, String title, Consumer<AnvilOutput> callback) {return new Menu(inventoryType, title, listener,callback);}
 
     public PagedMenu createPagedMenu(int size, String title) {
         return new PagedMenu(size, title, listener);

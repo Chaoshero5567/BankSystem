@@ -11,10 +11,10 @@ import java.util.regex.Pattern;
 
 public class Reflections {
 
-    private String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();
-    private String NMS_PREFIX = OBC_PREFIX.replace("org.bukkit.craftbukkit", "net.minecraft.server");
-    private String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
-    private Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
+    private final String OBC_PREFIX = Bukkit.getServer().getClass().getPackage().getName();
+    private final String NMS_PREFIX = OBC_PREFIX.replace("org.bukkit.craftbukkit", "net.minecraft.server");
+    private final String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
+    private final Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
 
 
     private String expandVariables(String name) {
@@ -176,7 +176,7 @@ public class Reflections {
 
     public Class<Object> getUntypedClass(String lookupName) {
         @SuppressWarnings({"rawtypes", "unchecked"})
-        Class<Object> clazz = (Class<Object>) (Class) getClass(lookupName);
+        Class<Object> clazz = (Class<Object>) getClass(lookupName);
         return clazz;
     }
 
@@ -190,19 +190,19 @@ public class Reflections {
     }
 
     public interface ConstructorInvoker {
-        public Object invoke(Object... arguments);
+        Object invoke(Object... arguments);
     }
 
     public interface MethodInvoker {
-        public Object invoke(Object target, Object... arguments);
+        Object invoke(Object target, Object... arguments);
     }
 
     public interface FieldAccessor<T> {
-        public T get(Object target);
+        T get(Object target);
 
-        public void set(Object target, Object value);
+        void set(Object target, Object value);
 
-        public boolean hasField(Object target);
+        boolean hasField(Object target);
     }
 
 }

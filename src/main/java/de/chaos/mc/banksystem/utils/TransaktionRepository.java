@@ -33,7 +33,7 @@ public class TransaktionRepository implements ITransaktionInterface {
         String year = String.valueOf(localDate.getYear());
         String date = dayOfMonth + " - " + month + " - " + year;
 
-                TransaktionLogsDAO transaktionLogsDAO = TransaktionLogsDAO.builder()
+        TransaktionLogsDAO transaktionLogsDAO = TransaktionLogsDAO.builder()
                 .uuid(uuid)
                 .target_uuid(target)
                 .amount(amount)

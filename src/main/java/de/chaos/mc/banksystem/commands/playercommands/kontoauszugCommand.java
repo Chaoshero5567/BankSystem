@@ -18,9 +18,8 @@ public class kontoauszugCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand( CommandSender sender,  Command command,  String label,  String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof Player player) {
             for (TransaktionLogsDAO dao : transaktionInterface.getLastTransaktions(player.getUniqueId())) {
                 String LORE = "Kontoauszug: /n" +
                         "Datum: " + dao.getDate() + "/n" +

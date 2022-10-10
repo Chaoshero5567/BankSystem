@@ -4,37 +4,37 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICoinsInterface {
-    public long getCoins(UUID uuid);
+    long getCoins(UUID uuid);
 
-    public long setCoinsBank(UUID uuid, long coins);
+    long setCoinsBank(UUID uuid, long coins);
 
-    public long setWalletCoins(UUID uuid, long coins);
+    long setWalletCoins(UUID uuid, long coins);
 
-    public long addCoins(UUID uuid, long coins);
+    long addCoins(UUID uuid, long coins);
 
-    public long removeCoins(UUID uuid, long coins);
+    long removeCoins(UUID uuid, long coins);
 
-    public long addCoinsBank(UUID uuid, long coins);
+    long addCoinsBank(UUID uuid, long coins);
 
-    public long removeCoinsBank(UUID uuid, long coins);
+    long removeCoinsBank(UUID uuid, long coins);
 
-    public long getCoinsBank(UUID uuid);
+    long getCoinsBank(UUID uuid);
 
-    public boolean hasEnoughCoins(UUID uuid, long amount);
+    boolean hasEnoughCoins(UUID uuid, long amount);
 
-    public long changePing(UUID uuid, int pin);
+    long changePing(UUID uuid, int pin);
 
-    public CoinsDAO createAccount(UUID uuid);
+    CoinsDAO createAccount(UUID uuid);
 
-    public String getKontonummer(UUID uuid);
+    String getKontonummer(UUID uuid);
 
-    public int getPin(UUID uuid);
+    int getPin(UUID uuid);
 
-    public boolean isValidKonto(String kontonummer);
+    boolean isValidKonto(String kontonummer);
 
-    public UUID getUUID(String Kontonummer);
+    UUID getUUID(String Kontonummer);
 
-    public boolean hasAccount(UUID uuid);
+    boolean hasAccount(UUID uuid);
 
-    public List<CoinsDAO> getAllAccounts();
+    List<CoinsDAO> getAllAccounts();
 }

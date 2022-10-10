@@ -19,7 +19,7 @@ public class BankKartenFactory {
         String kartenID = gen.nextString();
 
         String lore = "Kontonummer: " + kontonummer + "\n" +
-                      "KartenID: " + kartenID;
+                "KartenID: " + kartenID;
 
 
         NamespacedKey card = new NamespacedKey(BankSystem.getInstance(), "card");

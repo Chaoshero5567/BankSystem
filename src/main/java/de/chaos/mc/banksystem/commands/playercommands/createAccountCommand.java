@@ -27,9 +27,8 @@ public class createAccountCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand( CommandSender sender,  Command command,  String label,  String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof Player player) {
             Material cardItem = Material.getMaterial(itemsConfig.getBankkartenItem());
             if (player.getItemInHand().getType() == cardItem) {
                 ItemStack item = player.getItemInHand();

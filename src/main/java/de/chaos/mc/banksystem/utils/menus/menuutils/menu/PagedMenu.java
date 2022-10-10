@@ -17,10 +17,10 @@ public class PagedMenu extends Menu {
     int lastIndex = 0;
     HashMap<Integer, MenuItem> pagedItems = new HashMap<>();
     int currentPage = 0;
-    private int effectiveSize;
-    private ItemStackFactory itemStackFactory = new ItemStackFactory();
-    private ItemSkullFactory itemSkullFactory = new ItemSkullFactory();
-    private List<MenuItem> functionItems = new ArrayList<MenuItem>();
+    private final int effectiveSize;
+    private final ItemStackFactory itemStackFactory = new ItemStackFactory();
+    private final ItemSkullFactory itemSkullFactory = new ItemSkullFactory();
+    private final List<MenuItem> functionItems = new ArrayList<MenuItem>();
 
     public PagedMenu(int size, String title, MenuListener listener) {
         super(size > 36 ? 54 : size + 18, title, listener);

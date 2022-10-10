@@ -14,9 +14,9 @@ import java.util.concurrent.Executors;
 
 public class FileBuilder {
     private final File file;
-    private  FileConfiguration configuration;
     private final Map<String, Object> cache;
     private final ExecutorService pool;
+    private FileConfiguration configuration;
 
     public FileBuilder(String path, String name, HashMap<String, Object> defaults) {
         this.file = new File(path, name.toLowerCase() + ".yml");
@@ -65,7 +65,9 @@ public class FileBuilder {
     // Gets a object from the config
     public Object get(String key) {
         // Checks if object in cash and reutrns that
-        if (cache.containsKey(key)) {return cache.get(key);}
+        if (cache.containsKey(key)) {
+            return cache.get(key);
+        }
 
         // Puts object in cash and returns the object
         cache.put(key, configuration.get(key));
@@ -83,7 +85,9 @@ public class FileBuilder {
     }
 
     // Gets a boolean
-    public boolean getBoolean(String key) {return (boolean) get(key);}
+    public boolean getBoolean(String key) {
+        return (boolean) get(key);
+    }
 
     // Get all objects
     public List<String> getList(String key) {

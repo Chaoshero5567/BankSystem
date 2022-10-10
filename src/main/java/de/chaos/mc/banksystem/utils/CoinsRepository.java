@@ -122,11 +122,7 @@ public class CoinsRepository implements ICoinsInterface {
 
     @Override
     public boolean hasEnoughCoins(UUID uuid, long amount) {
-        if (getCoins(uuid) >= amount) {
-            return true;
-        } else {
-            return false;
-        }
+        return getCoins(uuid) >= amount;
     }
 
     @Override

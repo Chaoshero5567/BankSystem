@@ -3,14 +3,15 @@ package de.chaos.mc.banksystem.utils.menus.menuutils.menu;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @AllArgsConstructor
 @Setter
 @Getter
-public class AnvilOutput {
+public class PinObject {
     public UUID uuid;
-    public ItemStack output;
+    public String output;
+    public Consumer consumer;
 }

@@ -18,30 +18,24 @@ public class TransaktionEvent extends Event {
     private final UUID target;
     private int amount;
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-    
     public UUID getSender() {
         return sender;
     }
 
-    
     public UUID getTarget() {
         return target;
     }
 
-    
     public int getAmount() {
         return amount;
     }
 
-    
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

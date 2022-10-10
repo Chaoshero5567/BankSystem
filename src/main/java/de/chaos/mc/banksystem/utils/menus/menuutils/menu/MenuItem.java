@@ -8,9 +8,9 @@ import java.util.function.Consumer;
 public class MenuItem {
 
     private Consumer<Player> callback;
-    private int slot;
+    private final int slot;
     private Menu menu;
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
 
     public MenuItem(int slot, ItemStack itemStack, Consumer<Player> callback) {
         this.slot = slot;

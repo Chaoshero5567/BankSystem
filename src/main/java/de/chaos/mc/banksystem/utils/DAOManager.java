@@ -13,7 +13,7 @@ public class DAOManager<DaoType, KeyType> {
     protected Logger log = Logger.getLogger(DAOManager.class.getName());
     boolean tablesCreated = false;
     Dao<DaoType, KeyType> dao = null;
-    private Class<DaoType> daoType;
+    private final Class<DaoType> daoType;
 
     public DAOManager(Class<DaoType> daoType, BaseConnectionSource connectionSource) {
         this.daoType = daoType;

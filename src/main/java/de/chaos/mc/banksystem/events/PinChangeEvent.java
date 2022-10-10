@@ -17,6 +17,9 @@ public class PinChangeEvent extends Event {
     private int oldPin;
     private int newPin;
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
     public HumanEntity getPlayer() {
         return player;
@@ -32,10 +35,6 @@ public class PinChangeEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

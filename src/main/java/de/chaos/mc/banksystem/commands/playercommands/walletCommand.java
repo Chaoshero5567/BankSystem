@@ -15,9 +15,8 @@ public class walletCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand( CommandSender sender,  Command command,  String label,  String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof Player player) {
             if (args.length == 0 || args.length == 1) {
                 if (args.length == 0) {
                     player.sendMessage(String.valueOf(iCoinsInterface.getCoins(player.getUniqueId())));
